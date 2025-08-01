@@ -43,6 +43,8 @@ degnorm <- function(read_coverage, counts, iteration=5, loop=100,
                     1 (down-sampling) or 0 (not down-sampling)!")
     if(grid_size %% 1!=0||grid_size<0) {
         stop("Error: grid_size must be a positive integer.")}
+    if(!is.numeric(cores)) {
+        stop("Error: cores must be a positive integer.")}
     # filtering out genes with low expressions
     message("Filtering out genes with low read counts (x<5)..")
     n = dim(counts)[2]
