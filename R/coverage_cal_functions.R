@@ -24,7 +24,7 @@
 ###############################################################################
 read_coverage_batch=function(bam_file_list,gtf_file,cores=1){
     if(!is.numeric(cores)){
-    stop("Error: cores must be a positive integer.")}
+        stop("Error: cores must be a positive integer.")}
     i=1; options(warn=-1)
     all_genes=.gtf_parse(gtf_file)
     ##simplify bam file names if path information present in file names
