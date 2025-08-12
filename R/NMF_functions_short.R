@@ -35,7 +35,7 @@
 #               shape before degradation.
 ################################################################################
 degnorm <- function(read_coverage, counts, iteration=5, loop=100,
-                    down_sampling=1, grid_size=10,cores=1){
+                    down_sampling=1, grid_size=10,cores=1,read_thresh=5,sample_prop=0.50){
     # filtering out genes with low expressions
     if(length(read_coverage)!=nrow(counts)) stop("Error: number of genes from
                     coverage list is inconsistent with the counts matrix!")
@@ -46,9 +46,9 @@ degnorm <- function(read_coverage, counts, iteration=5, loop=100,
     if(!is.numeric(cores)){
         stop("Error: cores must be a positive integer.")}
     # filtering out genes with low expressions
-    message("Filtering out genes with low read counts (x<5)..")
+    message("Filtering out genes with low read counts..")
     n = dim(counts)[2]
-    filter = apply(counts, 1, function(x) length(x[x>5])>=floor(n/2))
+    filter = apply(counts, 1, function(x) length(x[x>read_thresh])>=floor(n*sample_prop))
     counts = counts[filter,];  m = dim(counts)[1]
     read_coverage = read_coverage[which(filter=="TRUE")]
     # Estimating library sizes / scaling factors from SVD
